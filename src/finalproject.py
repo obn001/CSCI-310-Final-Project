@@ -8,9 +8,9 @@ from osmnx.features import features_from_bbox # Import features_from_bbox direct
 def load_monrovia_graph():
     """Load the full drivable road network for Monrovia using coordinates."""
     print("Loading Monrovia road network... This may take some time.")
-    # Approximate coordinates for Monrovia, Liberia (e.g., city center)
+    # Approximate coordinates for Monrovia, Liberia (City Center)
     monrovia_lat = 6.3000
-    monrovia_lon = -10.8000  # West longitude is negative
+    monrovia_lon = -10.8000 
     # Define a distance in meters around the point to include in the graph
     dist = 15000  # e.g., 15 km radius
     G = ox.graph_from_point((monrovia_lat, monrovia_lon), dist=dist, network_type="drive")
@@ -20,8 +20,10 @@ def load_monrovia_graph():
     G.graph['bbox_north'] = north
     G.graph['bbox_south'] = south
     G.graph['bbox_east'] = east
-    G.graph['bbox_west'] = west
-
+    G.graph['bbox_west'] = west 
+    # Add edge speeds and travel times to the graph
+    G = ox.add_edge_speeds(G)
+    G = ox.add_edge_travel_times(G)
     print(f"Graph loaded with {len(G.nodes)} nodes and {len(G.edges)} edges.")
     return G
 
@@ -76,8 +78,9 @@ def shortest_route_by_street(G, street1, street2):
 
     route = nx.shortest_path(G, node1, node2, weight="length")
     distance = nx.shortest_path_length(G, node1, node2, weight="length")
+    time_sec = nx.shortest_path_length(G, node1, node2, weight="travel_time")
 
-    return route, distance
+    return route, distance, time_sec
 
 
 def draw_route(G, route):
@@ -93,16 +96,20 @@ def main():
     G = load_monrovia_graph()
 
     # Streets for analysis
-    street1 = "Tubman Boulevard"
-    street2 = "Nelson Street"
+    street1 = "God's favor woodshop"
+    street2 = "Chicken Soup Factory Road"
 
     # Calculate route
-    route, dist = shortest_route_by_street(G, street1, street2)
+    route, dist, time_sec = shortest_route_by_street(G, street1, street2)
+
 
     print(f"\nShortest driving distance from {street1} to {street2}:")
     print(f"{dist/1000:.2f} km\n")
 
-    # Visualize
+    # Convert seconds → minutes
+    minutes = time_sec / 60
+    print(f"Estimated driving time: {minutes:.1f} minutes\n")
+
     draw_route(G, route)
 
 

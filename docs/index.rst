@@ -11,11 +11,13 @@ Add your content using ``reStructuredText`` syntax. See the
 documentation for details.
 
 
+
+.. automodule:: FinalP
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 .. toctree::
-   .. automodule:: hello
-:members:
-:undoc-members:
-:show-inheritance:
    :maxdepth: 2
    :caption: Contents:
 
