@@ -1,28 +1,100 @@
-# CSCI310-Template-2025
-Template for assignments in CSCI310 Fall 2025
+Monrovia Street Routing Tool
 
-## Prerequisites
-These instructions assume the following:
-1. [VS Code](https://code.visualstudio.com/download) is installed
-1. [uv](https://docs.astral.sh/uv/) is installed
+A simple routing application built with OSMnx, NetworkX, and Python that helps users find the shortest route between two streets in Monrovia, Liberia.
 
-## Required setups
-1. Create a new repository selecting this one as a Template
-1. Open VS Code
-1. Clone your new repository
-1. Open a terminal window
-1. Create a virtual environment (`uv venv .venv --python 3.12`)
-1. Activate the virtual environment as the output from creating it says to
-1. Install [Sphinx](https://www.sphinx-doc.org/en/master/) (`uv pip install sphinx`)
-1. Change directory in terminal to the docs folder (`cd docs`)
-1. Run `sphinx-quickstart -t ../templates`
-1. Run `make html` on a Mac or `.\make.bat html` on Windows
-1. This should finish with `build succeeded`
-1. Add `conf.py` (should just show as modified) and `index.rst` (should show as new file) to your repository
-1. Change the name of `hello.py` to something related to your project
-1. Change the name `hello` in `index.rst` to the name of your file
-1. Modify both `conf.py` and `index.rst` to have the correct project name, author, and date
-1. Modify your .py file to have your name in the top docstring and to describe your project
-1. Make the documentation again by running `make html` on a Mac or `.\make.bat html` on Windows
-1. If it runs successfully, you are ready to modify the code to implement your project
-1. Lastly, modify this `README.md` file to match your project
+            This project includes:
+
+Two different streets distance calculation which also calculate:
+
+Shortest-route calculation
+
+Driving time estimation
+
+Route visualization
+
+VisualStadio Code
+
+                Features
+
+Street Search (if imported in the code) Search for any street name from the loaded Monrovia map.
+
+Shortest Path Calculation – Automatically find the shortest driving route between two streets.
+
+Driving Time Estimate – Calculates an estimated time based on road speeds.
+
+Route Plotting – Visualizes the route on a map using Matplotlib.
+
+Clean Code Structure – Uses functions for loading the graph, searching streets, and generating output.
+
+Technologies Used
+
+Python 3
+
+OSMnx
+
+NetworkX
+
+Matplotlib
+
+Pandas (optional)
+
+Google Colab Notebook (if running online) this was used to test my code and edit it
+
+⚠️ Required dependency: scikit-learn
+Install it if you see: ImportError: scikit-learn must be installed…
+
+pip install scikit-learn
+
+Project Structure
+/src
+   ├── finalproject.py        # Main routing script
+   ├── utils.py        # (Optional) helper functions
+   └── README.md       # This file
+
+How to Run
+Install Dependencies
+
+Run this in your terminal:
+
+pip install osmnx networkx matplotlib scikit-learn
+
+Run the Application
+python3 src/finalproject.py
+
+How It Works
+
+Load Monrovia Map
+
+Using OSMnx:
+
+G = ox.graph_from_place("Monrovia, Liberia", network_type="drive")
+
+Convert Street Names → Coordinates
+
+You search the street name inside the street dataset or through OSMnx’s geocoder.
+
+Calculate Shortest Route
+
+Using NetworkX:
+
+route = nx.shortest_path(G, orig_node, dest_node, weight="length")
+
+Estimate Travel Time
+
+Assuming average speed:
+
+time = distance / speed
+
+Plot the Route
+
+Using OSMnx:
+
+ox.plot_graph_route(G, route)
+
+Example Output
+
+Total distance (kilometers)
+
+Estimated time (minutes)
+
+Map showing the route
